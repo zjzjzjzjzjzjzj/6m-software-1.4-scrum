@@ -49,7 +49,7 @@ class Permission{
 
     // function
     check(){
-        
+
         const ops = this.#operation.toUpperCase();
 
         switch(this.#role.toUpperCase()){
@@ -73,3 +73,28 @@ class Permission{
 }
 
 // Add code here
+class Document extends Permission {
+    constructor(role, operation, content){
+        super(role,operation);
+        this.content = content;
+    }
+    process (){
+
+        if (this.check() == true){
+            console.log(` Check: ${this.check()} , therefore : Allowed`)
+
+        }
+        else if (this.check() == false){
+            console.log(` Check: ${this.check()} , therefore : Blocked`)
+        }
+    }
+}
+
+const d = new Document(Permission.RolesConst.EDITOR, Permission.OperationsConst.UPDATE, "Hello content")
+d.process(); // "Allowed"
+
+const e = new Document(Permission.RolesConst.READER, Permission.OperationsConst.UPDATE, "Hello content")
+e.process(); // "Blocked"
+
+const f = new Document(Permission.RolesConst.OWNER, Permission.OperationsConst.DELETE, "Hello content")
+f.process(); // "Allowed"
